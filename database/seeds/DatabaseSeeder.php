@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'password' => $faker->city,
+                'password' => uniqid(),
                 'birthday' => $faker->date(),
                 'phone_number' => $faker->phoneNumber,
                 'country' => $faker->country,
