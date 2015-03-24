@@ -10,7 +10,8 @@
         "barryvdh/laravel-ide-helper": "*",
         "barryvdh/laravel-debugbar": "*",
         "nayjest/grids": "dev-master",
-        "illuminate/html": "*"
+        "illuminate/html": "*",
+        "php": "~5.5.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
