@@ -1,8 +1,8 @@
 <?php
 $url = getenv("CLEARDB_DATABASE_URL");
-if (!$url) return [];
+if (!$url) die("error!");
 
-$url_parts = parse_url($url);
+$url_parts = parse_url(getenv("CLEARDB_DATABASE_URL"));
 return [
     'connections' => [
         'mysql' => [
@@ -18,3 +18,4 @@ return [
         ],
     ],
 ];
+
