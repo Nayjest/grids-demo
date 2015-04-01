@@ -9,7 +9,7 @@
         "fzaninotto/faker": "*",
         "barryvdh/laravel-ide-helper": "*",
         "barryvdh/laravel-debugbar": "*",
-        "nayjest/grids": "dev-master",
+        "nayjest/grids": ">=0.7.8",
         "illuminate/html": "*",
         "php": "~5.5.0"
 	},
