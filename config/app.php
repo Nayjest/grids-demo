@@ -147,7 +147,7 @@ return [
 
         'Illuminate\Html\HtmlServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-        //'Barryvdh\Debugbar\ServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
         'Nayjest\Grids\ServiceProvider',
 
 	],
