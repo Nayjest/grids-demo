@@ -4,8 +4,16 @@ use App\User;
 use Grids;
 use HTML;
 use Illuminate\Support\Facades\Config;
+use Nayjest\Grids\Components\Base\RenderableRegistry;
+use Nayjest\Grids\Components\ColumnHeadersRow;
+use Nayjest\Grids\Components\ColumnsHider;
+use Nayjest\Grids\Components\CsvExport;
+use Nayjest\Grids\Components\FiltersRow;
+use Nayjest\Grids\Components\HtmlTag;
 use Nayjest\Grids\Components\Laravel5\Pager;
 use Nayjest\Grids\Components\OneCellRow;
+use Nayjest\Grids\Components\RecordsPerPage;
+use Nayjest\Grids\Components\ShowingRecords;
 use Nayjest\Grids\Components\TFoot;
 use Nayjest\Grids\Components\THead;
 use Nayjest\Grids\Components\TotalsRow;
@@ -54,8 +62,7 @@ class DemoController extends Controller
                 new FieldConfig('name'),
                 new FieldConfig('email'),
                 new FieldConfig('country'),
-            ])
-            ;
+            ]);
         $grid = new Grid($cfg);
         $text = "<h1>Constructing grid programmatically</h1>";
         return view('demo.default', compact('grid', 'text'));
@@ -68,7 +75,7 @@ class DemoController extends Controller
                 ->setDataProvider(
                     new EloquentDataProvider(User::query())
                 )
-                ->setName('example_grid1')
+                ->setName('example_grid4')
                 ->setPageSize(15)
                 ->setColumns([
                     (new FieldConfig)
@@ -95,7 +102,11 @@ class DemoController extends Controller
                         ->setSortable(true)
                         ->setCallback(function ($val) {
                             $icon = '<span class="glyphicon glyphicon-envelope"></span>&nbsp;';
-                            return $icon . HTML::link("mailto:$val", $val);
+                            return
+                                '<small>'
+                                . $icon
+                                . HTML::link("mailto:$val", $val)
+                                . '</small>';
                         })
                         ->addFilter(
                             (new FilterConfig)
@@ -143,6 +154,27 @@ class DemoController extends Controller
                 ])
                 ->setComponents([
                     (new THead)
+                        ->setComponents([
+                            (new ColumnHeadersRow),
+                            (new FiltersRow),
+                            (new OneCellRow)
+                                ->setRenderSection(RenderableRegistry::SECTION_END)
+                                ->setComponents([
+                                    new RecordsPerPage,
+                                    new ColumnsHider,
+                                    (new CsvExport)
+                                        ->setFileName('my_report' . date('Y-m-d'))
+                                    ,
+                                    (new HtmlTag)
+                                        ->setContent('<span class="glyphicon glyphicon-refresh"></span> Filter')
+                                        ->setTagName('button')
+                                        ->setRenderSection(RenderableRegistry::SECTION_END)
+                                        ->setAttributes([
+                                            'class' => 'btn btn-success btn-sm'
+                                        ])
+                                ])
+
+                        ])
                     ,
                     (new TFoot)
                         ->setComponents([
@@ -156,11 +188,16 @@ class DemoController extends Controller
                             (new OneCellRow)
                                 ->setComponents([
                                     new Pager,
+                                    (new HtmlTag)
+                                        ->setAttributes(['class' => 'pull-right'])
+                                        ->addComponent(new ShowingRecords)
+                                    ,
                                 ])
                         ])
                     ,
                 ])
         );
+        $grid = $grid->render();
         return view('demo.default', compact('grid'));
     }
 
