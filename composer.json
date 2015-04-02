@@ -9,8 +9,9 @@
         "fzaninotto/faker": "*",
         "barryvdh/laravel-ide-helper": "*",
         "barryvdh/laravel-debugbar": "*",
-        "nayjest/grids": "dev-master",
+        "nayjest/grids": "dev-master@dev",
         "illuminate/html": "*",
+        "maatwebsite/excel": "~2.0.0",
         "php": ">=5.4.0"
 	},
 	"require-dev": {

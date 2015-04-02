@@ -149,6 +149,7 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'Nayjest\Grids\ServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
 
 	],
 
