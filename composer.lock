@@ -1115,12 +1115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nayjest/Grids.git",
-                "reference": "4e2a6830bdc8b188b6000423927733abdaf69e80"
+                "reference": "b5165d6b509942450c8c2c909aa188d00fa47e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/Grids/zipball/4e2a6830bdc8b188b6000423927733abdaf69e80",
-                "reference": "4e2a6830bdc8b188b6000423927733abdaf69e80",
+                "url": "https://api.github.com/repos/Nayjest/Grids/zipball/b5165d6b509942450c8c2c909aa188d00fa47e82",
+                "reference": "b5165d6b509942450c8c2c909aa188d00fa47e82",
                 "shasum": ""
             },
             "require": {
@@ -1129,7 +1129,8 @@
                 "php": ">=5.4.0"
             },
             "suggest": {
-                "illuminate/html": "Needed to work with Laravel 5.X"
+                "illuminate/html": "Required to work with Laravel 5.X",
+                "maatwebsite/excel": "Required to work with Excel export component"
             },
             "type": "library",
             "autoload": {
@@ -1159,7 +1160,7 @@
                 "laravel 5",
                 "tables"
             ],
-            "time": "2015-04-01 13:49:08"
+            "time": "2015-04-02 14:05:55"
         },
         {
             "name": "nesbot/carbon",
