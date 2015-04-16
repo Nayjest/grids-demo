@@ -162,9 +162,9 @@ class DemoController extends Controller
                             (new FiltersRow)
                                 ->addComponents([
                                     (new RenderFunc(function () {
-                                        return HTML::style('js/daterangepicker/daterangepicker-bs3.css', [], true)
-                                        . HTML::script('js/moment/moment-with-locales.js', [], true)
-                                        . HTML::script('js/daterangepicker/daterangepicker.js', [], true)
+                                        return HTML::style('js/daterangepicker/daterangepicker-bs3.css')
+                                        . HTML::script('js/moment/moment-with-locales.js')
+                                        . HTML::script('js/daterangepicker/daterangepicker.js')
                                         . "<style>
                                                 .daterangepicker td.available.active,
                                                 .daterangepicker li.active,
