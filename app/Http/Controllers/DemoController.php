@@ -20,6 +20,7 @@ use Nayjest\Grids\Components\ShowingRecords;
 use Nayjest\Grids\Components\TFoot;
 use Nayjest\Grids\Components\THead;
 use Nayjest\Grids\Components\TotalsRow;
+use Nayjest\Grids\DbalDataProvider;
 use Nayjest\Grids\EloquentDataProvider;
 use Nayjest\Grids\FieldConfig;
 use Nayjest\Grids\FilterConfig;
@@ -224,6 +225,37 @@ class DemoController extends Controller
         );
         $grid = $grid->render();
         return view('demo.default', compact('grid'));
+    }
+
+    public function getExample5()
+    {
+        $query = \DB::getDoctrineConnection()->createQueryBuilder();
+        $query
+            ->select([
+                'id',
+                'name',
+                'email',
+                'country',
+                'posts_count'
+            ])
+            ->from('users')
+            ->where('posts_count > 40');
+
+        $cfg = (new GridConfig())
+            ->setDataProvider(
+                new DbalDataProvider($query)
+            )
+            ->setPageSize(5)
+            ->setColumns([
+                new FieldConfig('id'),
+                new FieldConfig('name'),
+                new FieldConfig('email'),
+                new FieldConfig('country'),
+                new FieldConfig('posts_count'),
+            ]);
+        $grid = new Grid($cfg);
+        $text = '<h1>Grid with DbalDataProvider</h1>';
+        return view('demo.default', compact('grid', 'text'));
     }
 
 }
