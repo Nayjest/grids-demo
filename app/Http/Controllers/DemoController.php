@@ -258,4 +258,118 @@ class DemoController extends Controller
         return view('demo.default', compact('grid', 'text'));
     }
 
+    public function getExample6()
+    {
+
+        $cfg1 = (new GridConfig())
+            ->setName('bf1990')
+            ->setDataProvider(
+                new EloquentDataProvider(
+                    (new User)
+                        ->newQuery()
+                        ->where('birthday', '<', '1990-01-01')
+                )
+            )
+            ->setPageSize(5)
+            ->setColumns([
+                new FieldConfig('id'),
+                (new FieldConfig('name'))
+                    ->addFilter(new FilterConfig)
+                    ->setSortable(true)
+                ,
+                (new FieldConfig('birthday'))
+                    ->setSortable(true)
+            ])
+            ->setComponents([
+                (new THead)
+                    ->getComponentByName(FiltersRow::NAME)
+                    ->addComponent(
+                        (new HtmlTag)
+                            ->setTagName('button')
+                            ->setAttributes([
+                                'type' => 'submit',
+                                'class' => 'btn btn-success btn-small'
+                            ])
+                            ->addComponent(new RenderFunc(function() {
+                                return '<i class="glyphicon glyphicon-refresh"></i> Filter';
+                            }))
+                            ->setRenderSection('filters_row_column_birthday')
+                    )
+                    ->addComponent(
+                        (new ExcelExport)
+                            ->setFileName('users_before1990')
+                            ->setRenderSection('filters_row_column_birthday')
+
+                    )
+                    ->getParent()
+                ,
+                new TFoot
+            ]);
+        ;
+
+
+        $grid1 = (new Grid($cfg1))->render();
+
+        $cfg2 = (new GridConfig())
+            ->setName('af1990')
+            ->setDataProvider(
+                new EloquentDataProvider(
+                    (new User)
+                        ->newQuery()
+                        ->where('birthday', '>=', '1990-01-01')
+                )
+            )
+            ->setPageSize(5)
+            ->setColumns([
+                new FieldConfig('id'),
+                (new FieldConfig('name'))
+                    ->addFilter(
+                        (new FilterConfig)
+                        ->setOperator(FilterConfig::OPERATOR_LIKE)
+                    )
+                    ->setSortable(true)
+                ,
+                (new FieldConfig('birthday'))
+                    ->setSortable(true)
+            ])
+            ->setComponents([
+                (new THead)
+                    ->getComponentByName(FiltersRow::NAME)
+                    ->addComponent(
+                        (new HtmlTag)
+                            ->setTagName('button')
+                            ->setAttributes([
+                                'type' => 'submit',
+                                'class' => 'btn btn-success btn-small'
+                            ])
+                            ->addComponent(new RenderFunc(function() {
+                                return '<i class="glyphicon glyphicon-refresh"></i> Filter';
+                            }))
+                            ->setRenderSection('filters_row_column_birthday')
+                    )
+                    ->addComponent(
+                        (new ExcelExport)
+                            ->setFileName('users_after1990')
+                            ->setRenderSection('filters_row_column_birthday')
+
+                    )
+                    ->getParent()
+                ,
+                new TFoot
+            ]);
+        $grid2 = (new Grid($cfg2))->render();
+
+        $text = "<h1>Multiple grids on same page</h1>";
+
+        return view('demo.default', [
+            'text' => $text,
+            'grid' =>
+                '<h2>Users born before 1990</h2>'
+                . $grid1
+                .'<h2>Users born after 1990</h2>'
+                . $grid2
+        ]);
+
+    }
+
 }
